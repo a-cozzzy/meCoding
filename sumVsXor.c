@@ -12,45 +12,33 @@
 char* readline();
 char* ltrim(char*);
 char* rtrim(char*);
-char** split_string(char*);
 
-int parse_int(char*);
+long parse_long(char*);
 
 /*
- * Complete the 'lonelyinteger' function below.
+ * Complete the 'sumXor' function below.
  *
- * The function is expected to return an INTEGER.
- * The function accepts INTEGER_ARRAY a as parameter.
+ * The function is expected to return a LONG_INTEGER.
+ * The function accepts LONG_INTEGER n as parameter.
  */
-
-int lonelyinteger(int a_count, int* a) {
-
-    int l=0;
-    for (int i = 0; i < a_count; i++) {
-        l ^= a[i];
+long sumXor(long n) {
+    long count = 0;
+    while (n) {
+        if ((n & 1) == 0) // Check if the least significant bit is 0
+            count++;
+        n >>= 1; 
     }
-    return l;    
+    return (1L << count); 
 }
-
 int main()
 {
     FILE* fptr = fopen(getenv("OUTPUT_PATH"), "w");
 
-    int n = parse_int(ltrim(rtrim(readline())));
+    long n = parse_long(ltrim(rtrim(readline())));
 
-    char** a_temp = split_string(rtrim(readline()));
+    long result = sumXor(n);
 
-    int* a = malloc(n * sizeof(int));
-
-    for (int i = 0; i < n; i++) {
-        int a_item = parse_int(*(a_temp + i));
-
-        *(a + i) = a_item;
-    }
-
-    int result = lonelyinteger(n, a);
-
-    fprintf(fptr, "%d\n", result);
+    fprintf(fptr, "%ld\n", result);
 
     fclose(fptr);
 
@@ -145,30 +133,9 @@ char* rtrim(char* str) {
     return str;
 }
 
-char** split_string(char* str) {
-    char** splits = NULL;
-    char* token = strtok(str, " ");
-
-    int spaces = 0;
-
-    while (token) {
-        splits = realloc(splits, sizeof(char*) * ++spaces);
-
-        if (!splits) {
-            return splits;
-        }
-
-        splits[spaces - 1] = token;
-
-        token = strtok(NULL, " ");
-    }
-
-    return splits;
-}
-
-int parse_int(char* str) {
+long parse_long(char* str) {
     char* endptr;
-    int value = strtol(str, &endptr, 10);
+    long value = strtol(str, &endptr, 10);
 
     if (endptr == str || *endptr != '\0') {
         exit(EXIT_FAILURE);
