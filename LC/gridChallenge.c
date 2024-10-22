@@ -43,7 +43,7 @@ int parse_int(char*);
  */
 
 char* gridChallenge(int grid_count, char** grid) {
-    // Rearrange characters in each row in ascending alphabetical order
+
     for (int i = 0; i < grid_count; i++) {
         // Sort the current row lexicographically
         for (int j = 0; j < grid_count - 1; j++) {

@@ -53,12 +53,12 @@ char* caesarCipher(char* s, int k) {
 
     for (int i = 0; i < x; i++) {
         char ch = s[i];
-        if (isalpha(ch)) {  // Check if it's an alphabetic character
+        if (isalpha(ch)) {  
             int new_ascii = ch + k;
             if (isupper(ch)) {
-                new_ascii = (new_ascii - 'A') % 26 + 'A';  // Handle wrap-around for uppercase
+                new_ascii = (new_ascii - 'A') % 26 + 'A'; 
             } else {
-                new_ascii = (new_ascii - 'a') % 26 + 'a';  // Handle wrap-around for lowercase
+                new_ascii = (new_ascii - 'a') % 26 + 'a';  
             }
             str[i] = (char)new_ascii;
         } else {
